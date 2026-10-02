@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Создай книгу</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Вход и регистрация -->
+  <section id="auth" class="view">
+    <div class="lamp-row">
+      <svg width="120" height="150" viewBox="0 0 120 150" aria-hidden="true">
+        <circle cx="60" cy="66" r="54" fill="var(--acc)" opacity=".22"/>
+        <path d="M12 60 A48 40 0 0 1 108 60 Z" fill="var(--acc)"/>
+        <rect x="56" y="45" width="8" height="82" fill="var(--ink)"/>
+        <ellipse cx="60" cy="130" rx="38" ry="9" fill="var(--ink)"/>
+      </svg>
+      <div>
+        <div class="bubble">Лампа библиотеки и рекомендаций</div>
+        <div class="bubble b2">Здесь всегда найдётся, что почитать</div>
+      </div>
+    </div>
+
+    <form id="f-login" class="card">
+      <h1>Welcome</h1>
+      <input id="l-user" placeholder="UserName" autocapitalize="none" required />
+      <input id="l-pass" type="password" placeholder="Password" required />
+      <button class="primary">Sign In</button>
+      <button type="button" id="to-reg">Регистрация</button>
+      <p class="error" id="l-err"></p>
+    </form>
+
+    <form id="f-reg" class="card hidden">
+      <h1>РЕГИСТРАЦИЯ</h1>
+      <input id="r-name" placeholder="Имя" required />
+      <input id="r-nick" placeholder="Никнейм" autocapitalize="none" required />
+      <input id="r-email" type="email" placeholder="Email" required />
+      <input id="r-phone" type="tel" placeholder="Телефон" />
+      <input id="r-pass" type="password" placeholder="Пароль (от 6 символов)" minlength="6" required />
+      <button class="primary">Зарегистрироваться</button>
+      <button type="button" id="to-login">Назад ко входу</button>
+      <p class="error" id="r-err"></p>
+    </form>
+
+    <input id="srv" class="srv" placeholder="Адрес сервера, например http://192.168.1.5:8000/api" />
+  </section>
+
+  <!-- Основное приложение -->
+  <main id="app" class="hidden"><div id="screen"></div></main>
+  <nav id="nav" class="hidden">
+    <button data-tab="books">📚<span>Книги</span></button>
+    <button data-tab="dialogs">💬<span>Сообщения</span></button>
+    <button data-tab="profile">👤<span>Профиль</span></button>
+  </nav>
+
+  <!-- Бот-помощник: волшебник в очках -->
+  <div id="bot" class="hidden">
+    <div id="bot-bubble" class="bubble"></div>
+    <svg id="bot-img" width="64" height="64" viewBox="0 0 64 64" aria-label="Бот-помощник">
+      <rect x="14" y="35" width="36" height="27" rx="13" fill="#3B2F63"/>
+      <circle cx="32" cy="32" r="11.5" fill="#F2C9A0"/>
+      <path d="M40 1 L17 26 L47 26 Z" fill="#5A3FA0"/>
+      <rect x="11" y="24" width="42" height="3.5" fill="#3B2F63"/>
+      <circle cx="33" cy="14" r="2" fill="#FFD54F"/>
+      <circle cx="27" cy="32" r="4.5" fill="none" stroke="#222" stroke-width="1"/>
+      <circle cx="37" cy="32" r="4.5" fill="none" stroke="#222" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

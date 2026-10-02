@@ -1,0 +1,15 @@
+{
+  "name": "sozdai-knigu-app",
+  "version": "1.0.0",
+  "description": "Создай книгу — Android-приложение (Capacitor)",
+  "scripts": {
+    "android": "npx cap add android && npx cap sync android && npx cap open android"
+  },
+  "dependencies": {
+    "@capacitor/core": "^6.1.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.1.2",
+    "@capacitor/android": "^6.1.2"
+  }
+}
