@@ -2,6 +2,8 @@
 import os
 from pathlib import Path
 
+import dj_database_url
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "dev-insecure-change-me")
 DEBUG = os.environ.get("DJANGO_DEBUG", "1") == "1"
@@ -15,6 +17,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -31,14 +34,24 @@ TEMPLATES = [{
 }]
 WSGI_APPLICATION = "config.wsgi.application"
 
-# База данных: SQLite (файл backend/db.sqlite3 создаётся командой migrate).
-DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": BASE_DIR / "db.sqlite3"}}
+# База данных: на хостинге берётся из переменной DATABASE_URL (PostgreSQL, данные не пропадают),
+# на компьютере без неё используется файл backend/db.sqlite3.
+DATABASES = {"default": dj_database_url.config(
+    default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}", conn_max_age=600)}
 
 LANGUAGE_CODE = "ru"
 TIME_ZONE = "Europe/Moscow"
 USE_I18N = True
 USE_TZ = True
 STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+
+# За прокси хостинга (https)
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+CSRF_TRUSTED_ORIGINS = ["https://" + h for h in os.environ.get("DJANGO_ALLOWED_HOSTS", "").split(",") if h and h != "*"]
+if os.environ.get("RENDER_EXTERNAL_HOSTNAME"):
+    CSRF_TRUSTED_ORIGINS.append("https://" + os.environ["RENDER_EXTERNAL_HOSTNAME"])
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = {

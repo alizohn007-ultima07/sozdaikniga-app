@@ -141,3 +141,10 @@ def chat(request, username):
         Message.objects.create(sender=me_, receiver=other, text=text)
     msgs = Message.objects.filter(Q(sender=me_, receiver=other) | Q(sender=other, receiver=me_)).order_by("id")
     return Response([{"mine": m.sender_id == me_.id, "text": m.text, "created_at": m.created_at} for m in msgs])
+
+
+# ---------- Проверка, что сервер жив (и «будильник» для хостинга) ----------
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def health(request):
+    return Response({"ok": True})

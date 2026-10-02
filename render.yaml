@@ -1,0 +1,26 @@
+# Автоматическое развёртывание на Render.com: сервер + база PostgreSQL, работает круглосуточно.
+databases:
+  - name: sozdaikniga-db
+    databaseName: sozdaikniga
+    plan: free
+
+services:
+  - type: web
+    name: sozdaikniga-backend
+    runtime: python
+    rootDir: backend
+    plan: free
+    buildCommand: ./build.sh
+    startCommand: gunicorn config.wsgi:application
+    healthCheckPath: /api/health/
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: sozdaikniga-db
+          property: connectionString
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_DEBUG
+        value: "0"
+      - key: PYTHON_VERSION
+        value: "3.12.3"

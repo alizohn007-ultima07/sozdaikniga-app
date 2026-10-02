@@ -193,6 +193,7 @@ $("#bot-img").onclick = () => { tip = (tip + 1) % TIPS.length; $("#bot-bubble").
 
 // ---------- Старт ----------
 (async function start() {
+  Api.wake(); setInterval(() => Api.wake(), 8 * 60 * 1000); // будим сервер при запуске и пока приложение открыто
   $("#srv").value = Api.base; applyTheme(localStorage.getItem("theme") || "light");
   if (!Api.token) return;
   try { me = await load("me", Api.me); enter(); } catch (_) { Api.setToken(null); }
