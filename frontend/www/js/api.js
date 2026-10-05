@@ -1,7 +1,7 @@
 // ===== Связь с backend'ом =====
 // Адрес постоянно работающего сервера (после развёртывания на Render впишите сюда свой адрес).
 // Его же можно поменять на экране входа. Для проверки на своём компьютере: http://IP_КОМПЬЮТЕРА:8000/api
-const SERVER_URL = "https://10.218.126.12:8000/api";
+const SERVER_URL = "https://sozdaikniga-backend.onrender.com";
 
 const Api = {
   base: localStorage.getItem("api_base") || SERVER_URL,
